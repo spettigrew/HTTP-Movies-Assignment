@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
+
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -36,13 +37,37 @@ export default class Movie extends React.Component {
       return <div>Loading movie information...</div>;
     }
 
+    const handleDelete = (e, id) => {
+      e.preventDefault()
+      const list = updatedList.find(list => list.id === id)
+
+      if (window.confirm('Delete Movie from list?')) {
+        setUpdatedList(updatedList.filter(list => list.id !==id))
+
+        axios.delete(`/movies${id}`)
+        .then(result => {
+          console.log("Movie was deleted")
+        })
+        .catch(error => {
+          console.log(error)
+          setUpdatedList([ ...updatedList, list])
+        })
+      }
+    }
+
     return (
+      <>
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
+        <div
+        className="delete-button" onClick={(e) => handleDelete(e, list.id)}>
+          Delete
+        </div>
       </div>
+      </>
     );
   }
 }
