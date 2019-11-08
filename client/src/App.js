@@ -21,10 +21,11 @@ const App = () => {
         render={props => {
           return <Movie {...props} addToSavedList={addToSavedList} />
         }}
-        <Route exact path='/update-movie/:id' component={UpdateList}/>
-      />
-    </>
-  );
-};
+        />
+        <Route exact path='/update-movie/:id' component={UpdateList} />
+        </>
+  )
+}
 
 export default App;
+

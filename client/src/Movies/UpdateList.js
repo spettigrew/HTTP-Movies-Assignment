@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function UpdateList(props) {
@@ -10,17 +10,17 @@ function UpdateList(props) {
         stars: '',
     })
 
-    // useEffect(() => {
-    //     axios.get(`/update-movie/:id${props.match.params.id}`)
-    //     .then((result) => {
-    //         setUpdatedList(result.data)
-    //     })
-    //     .catch((error) => {
-    //         console.log(error)
-    //     })
-    // }, [props.match.params.id])
+    useEffect(() => {
+        axios.get(`/update-movie/:id${props.match.params.id}`)
+        .then((result) => {
+            setUpdatedList(result.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }, [props.match.params.id])
 
-    const handleChange = (e) +. {
+    const handleChange = (e) => {
         setUpdatedList({
             ...updatedList, 
             [e.target.name]: e.target.value
@@ -36,6 +36,7 @@ function UpdateList(props) {
                 props.history.push('/movies')
             })
             .catch((error) => {
+                console.log(error)
             })
         }
 
