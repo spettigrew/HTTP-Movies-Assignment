@@ -11,7 +11,7 @@ function UpdateList(props) {
     })
 
     useEffect(() => {
-        axios.get(`/update-movie/:id${props.match.params.id}`)
+        axios.get(`http://localhost:5000/api/movies/${props.match.params.id}`)
         .then((result) => {
             setUpdatedList(result.data)
         })
@@ -28,8 +28,7 @@ function UpdateList(props) {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-    
+        e.preventDefault() 
 
         axios.put(`/update-movie/:id${updatedList}`, updatedList)
             .then((result) => {
@@ -46,7 +45,7 @@ function UpdateList(props) {
             <form onSubmit={handleSubmit}>
                 <input type='text' name='name' placeholder='Movie Title' value={updatedList.name} onChange={handleChange} />
             </form>
-            <button type='submit'>Edit</button>
+            <button type='submit'>Update</button>
         </div>
     )
 }

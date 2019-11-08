@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props)
     this.state = {
       movie: null
     };
@@ -34,45 +35,16 @@ export default class Movie extends React.Component {
 
   render() {
     if (!this.state.movie) {
-      return <div>Loading movie information...</div>;
-    }
-
-    const [updateList, setUpdateList] = useState({
-      id: [],
-    })
-
-    const handleDelete = (e, id) => {
-      e.preventDefault()
-      const list = updateList.find(list => list.id === id)
-
-      if (window.confirm('Delete Movie from list?')) {
-        setUpdateList(updateList.filter(list => list.id !== id))
-
-        axios.delete(`/movies${id}`)
-          .then(result => {
-            console.log("Movie was deleted")
-          })
-          .catch(error => {
-            console.log(error)
-            setUpdateList([...updateList, list])
-          })
-      }
+      return <div>Loading movie information...</div>
     }
 
     return (
-      <>
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
-          <div
-            className="delete-button" onClick={(e) => handleDelete(e, list.id)}>
-            Delete
-        </div>
-        />
       </div>
-      </>
-    );
+      );
+    }
   }
-}
